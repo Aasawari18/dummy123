@@ -74,7 +74,7 @@ app.post("/check", async (req, res) => {
 app.get("/test-ai", async (req, res) => {
     try {
 
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.0-flash" });
 
         const result = await model.generateContent("Say hello in one sentence.");
 
