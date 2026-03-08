@@ -16,7 +16,7 @@ const API_KEY = "069fa03c38004a28bbcae3d3f8c1d443";
 
 async function checkFakeNews(newsText) {
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt =
         "Tell if the following news is FAKE or REAL. Answer in 1 short sentence: " +
