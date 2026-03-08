@@ -1,12 +1,25 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const express = require("express");
+const axios = require("axios");
+const cors = require("cors");
 
-const genAI = new GoogleGenerativeAI("AIzaSyBp1_YzkW-crJ7cOnwVrzQsTOXoL7aWiwU");
+const genAI = new GoogleGenerativeAI("YOUR_GEMINI_API_KEY");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+const PORT = process.env.PORT || 3000;   // ✅ FIX 1
+const API_KEY = "069fa03c38004a28bbcae3d3f8c1d443";
 
 async function checkFakeNews(newsText) {
 
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = "Tell if this news is Fake or Real: " + newsText;
+    const prompt =
+        "Tell if the following news is FAKE or REAL. Answer in 1 short sentence: " +
+        newsText;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -14,18 +27,6 @@ async function checkFakeNews(newsText) {
 
     return text;
 }
-
-const express = require("express");
-const axios = require("axios");
-const cors = require("cors");
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-const PORT = 3000;
-const API_KEY = "069fa03c38004a28bbcae3d3f8c1d443";
 
 app.get("/news", async (req, res) => {
 
@@ -46,7 +47,6 @@ app.get("/news", async (req, res) => {
     }
 
 });
-
 
 app.post("/check", async (req, res) => {
 
@@ -72,4 +72,4 @@ app.post("/check", async (req, res) => {
 
 app.listen(PORT, () => {
     console.log("Server running on port " + PORT);
-}); 
+});
